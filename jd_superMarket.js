@@ -1,5 +1,10 @@
-// 更新时间：2021-01-09 20:00
- 
+/*
+ * @Author: lxk0301 https://github.com/lxk0301
+ * @Date: 2021-01-12 16:00:00 
+ * @Last Modified by: TongLin138
+ * @Last Modified time: 2021-01-12 16:00:00
+ */
+
 const $ = new Env('东东超市');
 //Node.js用户请在jdCookie.js处填写京东ck;
 //IOS等用户直接用NobyDa的jd cookie
@@ -74,7 +79,7 @@ async function jdSuperMarket() {
   await daySign();//每日签到
   await BeanSign()//
   await doDailyTask();//做日常任务，分享，关注店铺，
-  await help();//商圈助力
+  // await help();//商圈助力
   //await smtgQueryPkTask();//做商品PK任务
   await drawLottery();//抽奖功能(招财进宝)
   // await myProductList();//货架
@@ -83,7 +88,8 @@ async function jdSuperMarket() {
   // await limitTimeProduct();
   await smtg_shopIndex();
   await smtgHome();
-  await receiveUserUpgradeBlue()
+  await receiveUserUpgradeBlue();
+  await Home();
 }
 function showMsg() {
   $.log(`【京东账号${$.index}】${$.nickName}\n${message}`);
@@ -690,7 +696,7 @@ async function receiveUserUpgradeBlue() {
   if ($.userUpgradeBlueVos && $.userUpgradeBlueVos.length > 0) {
     for (let item of $.userUpgradeBlueVos) {
       const receiveCoin = await smtgReceiveCoin({ "id": item.id, "type": 5 })
-      $.log(`\n${JSON.stringify(receiveCoin)}`)
+      // $.log(`\n${JSON.stringify(receiveCoin)}`)
       if (receiveCoin && receiveCoin.data['bizCode'] === 0) {
         $.receiveUserUpgradeBlue += receiveCoin.data.result['receivedBlue']
       }
@@ -701,6 +707,15 @@ async function receiveUserUpgradeBlue() {
   // $.log(`${JSON.stringify(res)}\n`)
   if (res && res.data['bizCode'] === 0) {
     console.log(`\n收取营业额：获得 ${res.data.result['receivedTurnover']}蓝币\n`);
+  }
+}
+async function Home() {
+  const homeRes = await smtgHome();
+  if (homeRes && homeRes.data['bizCode'] === 0) {
+    const { result } = homeRes.data;
+    const { shopName, totalBlue } = result;
+    subTitle = shopName;
+    message += `【总蓝币】${totalBlue}个\n`;
   }
 }
 //=============================================脚本使用到的京东API=====================================
@@ -718,7 +733,8 @@ function smtg_shopIndex() {
         } else {
           data = JSON.parse(data);
           if (data && data.data['bizCode'] === 0) {
-            const { shopId, shelfList } = data.data['result'];
+            const { shopId, shelfList, merchandiseList, level } = data.data['result'];
+            message += `【店铺等级】${level}\n`;
             if (shelfList && shelfList.length > 0) {
               for (let item of shelfList) {
                 //status: 2可解锁,1可升级,-1不可解锁
@@ -734,6 +750,16 @@ function smtg_shopIndex() {
                   $.log(`[${item['name']}] 已解锁，当前等级：${item['level']}级`)
                 } else {
                   $.log(`未知店铺状态(status)：${item['status']}\n`)
+                }
+              }
+            }
+            if (data.data['result']['forSaleMerchandise']) {
+              $.log(`\n限时商品${data.data['result']['forSaleMerchandise']['name']}已上架`)
+            } else {
+              if (merchandiseList && merchandiseList.length > 0) {
+                for (let  item of merchandiseList) {
+                  console.log(`发现限时商品${item.name}\n`);
+                  await smtg_sellMerchandise({"shopId": shopId,"merchandiseId": item['id'],"channel":"18"})
                 }
               }
             }
@@ -776,6 +802,26 @@ function smtg_shelfUpgrade(body) {
           console.log(JSON.stringify(err));
         } else {
           $.log(`店铺升级结果:${data}\n`)
+          data = JSON.parse(data);
+        }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve(data);
+      }
+    })
+  })
+}
+//售卖限时商品API
+function smtg_sellMerchandise(body) {
+  return new Promise((resolve) => {
+    $.get(taskUrl('smtg_sellMerchandise', body), (err, resp, data) => {
+      try {
+        if (err) {
+          console.log('\n京小超: API查询请求失败 ‼️‼️')
+          console.log(JSON.stringify(err));
+        } else {
+          $.log(`限时商品售卖结果:${data}\n`)
           data = JSON.parse(data);
         }
       } catch (e) {
@@ -929,8 +975,6 @@ function smtgHome() {
             const { shopName, totalBlue, userUpgradeBlueVos, turnoverProgress } = result;
             $.userUpgradeBlueVos = userUpgradeBlueVos;
             $.turnoverProgress = turnoverProgress;//是否可解锁
-            subTitle = shopName;
-            message += `【总蓝币】${totalBlue}个\n`;
           }
         }
       } catch (e) {
@@ -1484,7 +1528,7 @@ function TotalBean() {
         "Connection": "keep-alive",
         "Cookie": cookie,
         "Referer": "https://wqs.jd.com/my/jingdou/my.shtml?sceneval=2",
-        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0") : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0")
+        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0")
       }
     }
     $.post(options, (err, resp, data) => {
@@ -1516,7 +1560,7 @@ function taskUrl(function_id, body = {}) {
   return {
     url: `${JD_API_HOST}?functionId=${function_id}&appid=jdsupermarket&clientVersion=8.0.0&client=m&body=${escape(JSON.stringify(body))}&t=${Date.now()}`,
     headers: {
-      'User-Agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0") : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0"),
+      'User-Agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0"),
       'Host': 'api.m.jd.com',
       'Cookie': cookie,
       'Referer': 'https://jdsupermarket.jd.com/game',

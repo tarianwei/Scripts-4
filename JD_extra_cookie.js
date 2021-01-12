@@ -1,4 +1,9 @@
-// 更新时间：2020-11-23 14:00
+/*
+ * @Author: lxk0301 https://github.com/lxk0301
+ * @Date: 2021-01-12 16:00:00 
+ * @Last Modified by: TongLin138
+ * @Last Modified time: 2021-01-12 16:00:00
+ */
 
 const APIKey = "CookiesJD";
 $ = new API(APIKey, true);
