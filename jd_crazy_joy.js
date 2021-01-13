@@ -2,16 +2,16 @@
  * @Author: lxk0301 https://github.com/lxk0301
  * @Date: 2021-01-12 16:00:00 
  * @Last Modified by: TongLin138
- * @Last Modified time: 2021-01-12 16:00:00
+ * @Last Modified time: 2021-01-13 15:00:00
  */
 
 const $ = new Env('crazyJoy任务');
 const JD_API_HOST = 'https://api.m.jd.com/';
 
 const notify = $.isNode() ? require('./sendNotify') : '';
-let jdNotify = true;//是否关闭通知，false打开通知推送，true关闭通知推送
-let helpSelf = true // 循环助力，默认关闭
-let applyJdBean = 0
+let jdNotify = true; //是否关闭通知，false打开通知推送，true关闭通知推送
+let helpSelf = true; // 循环助力，默认关闭
+let applyJdBean = 2000; //疯狂的JOY京豆兑换，目前最小值为2000京豆，默认为 0 不开启京豆兑换
 let cookiesArr = [], cookie = '', message = '';
 const inviteCodes = [
   'zaaZ8eSJv98UtZluEN0vQqt9zd5YaBeE@Y9K0ETOusdCyVHyCDNQQhQ==@behKECFXhPuvf4P2ogoBS6t9zd5YaBeE@8F63d7oPPKE0b74OXrcfmg==@7vqcPJGgyY1rJRECNBASjA==',
