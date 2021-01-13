@@ -2,7 +2,7 @@
  * @Author: lxk0301 https://github.com/lxk0301
  * @Date: 2021-01-12 16:00:00 
  * @Last Modified by: TongLin138
- * @Last Modified time: 2021-01-12 16:00:00
+ * @Last Modified time: 2021-01-13 21:00:00
  */
 
 const $ = new Env('宠汪汪积分兑换奖品');
@@ -125,8 +125,10 @@ async function joyReward() {
               //   await notify.BarkNotify(`${$.name}`, `【京东账号${$.index}】 ${$.nickName}\n【兑换${giftName}】成功\n【宠物等级】${data.level}\n【消耗积分】${salePrice}分\n【当前剩余】${data.coin - salePrice}积分`);
               // }
             } else if ($.exchangeRes && $.exchangeRes.errorCode === 'buy_limit') {
-              console.log(`兑换${rewardNum}京豆失败，原因：兑换京豆已达上限，请把机会留给更多的小伙伴~`)
+              console.log(`兑换${rewardNum}京豆失败，原因：兑换京豆已达上限，请把机会留给更多的小伙伴~\n`)
               //$.msg($.name, `兑换${giftName}失败`, `【京东账号${$.index}】${$.nickName}\n兑换京豆已达上限\n请把机会留给更多的小伙伴~\n`)
+            } else if ($.exchangeRes && $.exchangeRes.errorCode === 'stock_empty'){
+              console.log(`兑换${rewardNum}京豆失败，原因：当前京豆库存为空\n`)
             } else {
               console.log(`兑奖异常:${JSON.stringify($.exchangeRes)}`)
             }
