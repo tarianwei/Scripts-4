@@ -2,7 +2,7 @@
  * @Author: lxk0301 https://github.com/lxk0301
  * @Date: 2021-01-12 16:00:00 
  * @Last Modified by: TongLin138
- * @Last Modified time: 2021-01-13 21:00:00
+ * @Last Modified time: 2021-01-16 17:00:00
  */
 
 const $ = new Env('京东种豆得豆');
@@ -64,32 +64,36 @@ let randomCount = $.isNode() ? 20 : 5;
 })
 
 async function jdPlantBean() {
-  console.log(`获取任务及基本信息`)
-  await plantBeanIndex();
-  // console.log(plantBeanIndexResult.data.taskList);
-  if ($.plantBeanIndexResult.code === '0') {
-    const shareUrl = $.plantBeanIndexResult.data.jwordShareInfo.shareUrl
-    $.myPlantUuid = getParam(shareUrl, 'plantUuid')
-    console.log(`\n【京东账号${$.index}（${$.nickName || $.UserName}）的${$.name}好友互助码】${$.myPlantUuid}\n`);
-    roundList = $.plantBeanIndexResult.data.roundList;
-    currentRoundId = roundList[1].roundId;//本期的roundId
-    lastRoundId = roundList[0].roundId;//上期的roundId
-    awardState = roundList[0].awardState;
-    $.taskList = $.plantBeanIndexResult.data.taskList;
-    subTitle = `【京东昵称】${$.plantBeanIndexResult.data.plantUserInfo.plantNickName}`;
-    message += `【上期时间】${roundList[0].dateDesc.replace('上期 ', '')}\n`;
-    message += `【上期成长值】${roundList[0].growth}\n`;
-    await receiveNutrients();//定时领取营养液
-    await doHelp();//助力
-    await doTask();//做日常任务
-    await doEgg();
-    await stealFriendWater();
-    await doCultureBean();
-    await doGetReward();
-    await showTaskProcess();
-    await plantShareSupportList();
-  } else {
-    console.log(`种豆得豆-初始失败:  ${JSON.stringify($.plantBeanIndexResult)}`);
+  try {
+    console.log(`获取任务及基本信息`)
+    await plantBeanIndex();
+    // console.log(plantBeanIndexResult.data.taskList);
+    if ($.plantBeanIndexResult.code === '0') {
+      const shareUrl = $.plantBeanIndexResult.data.jwordShareInfo.shareUrl
+      $.myPlantUuid = getParam(shareUrl, 'plantUuid')
+      console.log(`\n【京东账号${$.index}（${$.nickName || $.UserName}）的${$.name}好友互助码】${$.myPlantUuid}\n`);
+      roundList = $.plantBeanIndexResult.data.roundList;
+      currentRoundId = roundList[1].roundId;//本期的roundId
+      lastRoundId = roundList[0].roundId;//上期的roundId
+      awardState = roundList[0].awardState;
+      $.taskList = $.plantBeanIndexResult.data.taskList;
+      subTitle = `【京东昵称】${$.plantBeanIndexResult.data.plantUserInfo.plantNickName}`;
+      message += `【上期时间】${roundList[0].dateDesc.replace('上期 ', '')}\n`;
+      message += `【上期成长值】${roundList[0].growth}\n`;
+      await receiveNutrients();//定时领取营养液
+      await doHelp();//助力
+      await doTask();//做日常任务
+      await doEgg();
+      await stealFriendWater();
+      await doCultureBean();
+      await doGetReward();
+      await showTaskProcess();
+      await plantShareSupportList();
+    } else {
+      console.log(`种豆得豆-初始失败:  ${JSON.stringify($.plantBeanIndexResult)}`);
+    }
+  } catch (e) {
+    $.logErr(e);
   }
 }
 async function doGetReward() {
