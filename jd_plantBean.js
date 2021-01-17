@@ -2,7 +2,7 @@
  * @Author: lxk0301 https://github.com/lxk0301
  * @Date: 2021-01-12 16:00:00 
  * @Last Modified by: TongLin138
- * @Last Modified time: 2021-01-17 09:00:00
+ * @Last Modified time: 2021-01-17 16:00:00
  */
 
 const $ = new Env('京东种豆得豆');
@@ -501,7 +501,7 @@ async function plantBeanIndex() {
 }
 function readShareCode() {
   return new Promise(async resolve => {
-    $.get({url: `http://api.turinglabs.net/api/v1/jd/bean/read/${randomCount}/`, timeout: 10000}, (err, resp, data) => {
+    $.get({url: `http://jd.turinglabs.net/api/v2/jd/bean/read/${randomCount}/`, timeout: 10000}, (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)

@@ -2,7 +2,7 @@
  * @Author: lxk0301 https://github.com/lxk0301
  * @Date: 2021-01-12 16:00:00 
  * @Last Modified by: TongLin138
- * @Last Modified time: 2021-01-13 21:00:00
+ * @Last Modified time: 2021-01-17 16:00:00
  */
 
 const isRequest = typeof $request != "undefined"
@@ -95,7 +95,7 @@ async function getToken() {
         $.setdata(`${count}`, 'countFlag');
         $.msg($.name, '更新Token: 成功🎉', ``);
         console.log(`开始上传Token`)
-        await $.http.get({url: `http://api.turinglabs.net/api/v1/jd/joy/create/${LKYLToken}/`}).then((resp) => {
+        await $.http.get({url: `http://jd.turinglabs.net/api/v2/jd/joy/create/${LKYLToken}/`}).then((resp) => {
           if (resp.statusCode === 200) {
             let { body } = resp;
             console.log(`Token提交结果:${body}`)
@@ -131,7 +131,7 @@ async function getToken() {
 }
 function readToken() {
   return new Promise(resolve => {
-    $.get({url: `http://api.turinglabs.net/api/v1/jd/joy/read/1/`, 'timeout': 10000}, (err, resp, data) => {
+    $.get({url: `http://jd.turinglabs.net/api/v2/jd/joy/read/1/`, 'timeout': 10000}, (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)

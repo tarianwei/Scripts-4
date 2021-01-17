@@ -2,7 +2,7 @@
  * @Author: lxk0301 https://github.com/lxk0301
  * @Date: 2021-01-12 16:00:00 
  * @Last Modified by: TongLin138
- * @Last Modified time: 2021-01-13 21:00:00
+ * @Last Modified time: 2021-01-17 16:00:00
  */
 
 const $ = new Env('东东工厂');
@@ -599,7 +599,7 @@ function jdfactory_getHomeData() {
 function readShareCode() {
   console.log(`开始`)
   return new Promise(async resolve => {
-    $.get({url: `http://api.turinglabs.net/api/v1/jd/ddfactory/read/${randomCount}/`, timeout: 10000}, (err, resp, data) => {
+    $.get({url: `http://jd.turinglabs.net/api/v2/jd/ddfactory/read/${randomCount}/`, timeout: 10000}, (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
