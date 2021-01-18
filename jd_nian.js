@@ -2,7 +2,7 @@
  * @Author: shylocks https://github.com/shylocks
  * @Date: 2021-01-18 09:35:00 
  * @Last Modified by: TongLin138
- * @Last Modified time: 2021-01-18 09:40:00
+ * @Last Modified time: 2021-01-18 11:00:00
  */
 
 const $ = new Env('京东炸年兽🧨');
@@ -30,16 +30,16 @@ if ($.isNode()) {
 }
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
 const inviteCodes = [
-  `Q0`,
-  `Q0`,
-  `Q0`,
-  `Q0`,
-  `Q0`,
-  `Q0`,
-  `Q0`,
-  `Q0`,
-  `Q0`,
-  `Q0`
+  `cgxZdTXtIezcvw2dDlGuu8AVtkk4ieg5bNU5d36l-PPxv2KgRSNDKrrEmZs@cgxZaDXrdcemi1mpSFv3q6QBAYOLHQjSyXdCqUnSQvcpRJm1_-cN@cgxZdTXtI7LZuFzLDACt5vWbqjG-c6h6iR1DTpsDW76AZuDB2Nj8lSf_08Y@cgxZdTXtYeCtkHeuSVPwtWuMY3f26Kp5J99P5wg6F0BH6KN-B02paj8@cgxZdTXtI7jZvgzLXgOvvugGP1nz_2Oni8R51xUM3cC2xIMIMMqmI5Zh7KY`,
+  `cgxZdTXtIezcvw2dDlGuu8AVtkk4ieg5bNU5d36l-PPxv2KgRSNDKrrEmZs@cgxZaDXrdcemi1mpSFv3q6QBAYOLHQjSyXdCqUnSQvcpRJm1_-cN@cgxZdTXtI7LZuFzLDACt5vWbqjG-c6h6iR1DTpsDW76AZuDB2Nj8lSf_08Y@cgxZdTXtYeCtkHeuSVPwtWuMY3f26Kp5J99P5wg6F0BH6KN-B02paj8@cgxZdTXtI7jZvgzLXgOvvugGP1nz_2Oni8R51xUM3cC2xIMIMMqmI5Zh7KY`,
+  `cgxZdTXtIezcvw2dDlGuu8AVtkk4ieg5bNU5d36l-PPxv2KgRSNDKrrEmZs@cgxZaDXrdcemi1mpSFv3q6QBAYOLHQjSyXdCqUnSQvcpRJm1_-cN@cgxZdTXtI7LZuFzLDACt5vWbqjG-c6h6iR1DTpsDW76AZuDB2Nj8lSf_08Y@cgxZdTXtYeCtkHeuSVPwtWuMY3f26Kp5J99P5wg6F0BH6KN-B02paj8@cgxZdTXtI7jZvgzLXgOvvugGP1nz_2Oni8R51xUM3cC2xIMIMMqmI5Zh7KY`,
+  `cgxZdTXtIezcvw2dDlGuu8AVtkk4ieg5bNU5d36l-PPxv2KgRSNDKrrEmZs@cgxZaDXrdcemi1mpSFv3q6QBAYOLHQjSyXdCqUnSQvcpRJm1_-cN@cgxZdTXtI7LZuFzLDACt5vWbqjG-c6h6iR1DTpsDW76AZuDB2Nj8lSf_08Y@cgxZdTXtYeCtkHeuSVPwtWuMY3f26Kp5J99P5wg6F0BH6KN-B02paj8@cgxZdTXtI7jZvgzLXgOvvugGP1nz_2Oni8R51xUM3cC2xIMIMMqmI5Zh7KY`,
+  `cgxZdTXtIezcvw2dDlGuu8AVtkk4ieg5bNU5d36l-PPxv2KgRSNDKrrEmZs@cgxZaDXrdcemi1mpSFv3q6QBAYOLHQjSyXdCqUnSQvcpRJm1_-cN@cgxZdTXtI7LZuFzLDACt5vWbqjG-c6h6iR1DTpsDW76AZuDB2Nj8lSf_08Y@cgxZdTXtYeCtkHeuSVPwtWuMY3f26Kp5J99P5wg6F0BH6KN-B02paj8@cgxZdTXtI7jZvgzLXgOvvugGP1nz_2Oni8R51xUM3cC2xIMIMMqmI5Zh7KY`,
+  `cgxZXRDgU8ujlAbICQyro6D3c5CzwmV8vqouYa0tR7pJzQ@cgxZdTXtILmL4gzIWQOr64COfdWVjgQI3pr2GU6jYfW1HxpOvKt1a5Z7ayA@cgxZXRDgU8ujlA_KAEnljLKsODl1iE1gkqtooh7R@cgxZLWGDIs6rlHq4dknljP-R1P_cNItJodKiEkBB@cgxZ-MUC8x5a4w_ICgSvoxTVvcrhqCAJqpO_Fcuh91bakg`,
+  `cgxZXRDgU8ujlAbICQyro6D3c5CzwmV8vqouYa0tR7pJzQ@cgxZdTXtILmL4gzIWQOr64COfdWVjgQI3pr2GU6jYfW1HxpOvKt1a5Z7ayA@cgxZXRDgU8ujlA_KAEnljLKsODl1iE1gkqtooh7R@cgxZLWGDIs6rlHq4dknljP-R1P_cNItJodKiEkBB@cgxZ-MUC8x5a4w_ICgSvoxTVvcrhqCAJqpO_Fcuh91bakg`,
+  `cgxZXRDgU8ujlAbICQyro6D3c5CzwmV8vqouYa0tR7pJzQ@cgxZdTXtILmL4gzIWQOr64COfdWVjgQI3pr2GU6jYfW1HxpOvKt1a5Z7ayA@cgxZXRDgU8ujlA_KAEnljLKsODl1iE1gkqtooh7R@cgxZLWGDIs6rlHq4dknljP-R1P_cNItJodKiEkBB@cgxZ-MUC8x5a4w_ICgSvoxTVvcrhqCAJqpO_Fcuh91bakg`,
+  `cgxZXRDgU8ujlAbICQyro6D3c5CzwmV8vqouYa0tR7pJzQ@cgxZdTXtILmL4gzIWQOr64COfdWVjgQI3pr2GU6jYfW1HxpOvKt1a5Z7ayA@cgxZXRDgU8ujlA_KAEnljLKsODl1iE1gkqtooh7R@cgxZLWGDIs6rlHq4dknljP-R1P_cNItJodKiEkBB@cgxZ-MUC8x5a4w_ICgSvoxTVvcrhqCAJqpO_Fcuh91bakg`,
+  `cgxZXRDgU8ujlAbICQyro6D3c5CzwmV8vqouYa0tR7pJzQ@cgxZdTXtILmL4gzIWQOr64COfdWVjgQI3pr2GU6jYfW1HxpOvKt1a5Z7ayA@cgxZXRDgU8ujlA_KAEnljLKsODl1iE1gkqtooh7R@cgxZLWGDIs6rlHq4dknljP-R1P_cNItJodKiEkBB@cgxZ-MUC8x5a4w_ICgSvoxTVvcrhqCAJqpO_Fcuh91bakg`
 ];
 !(async () => {
   await requireConfig();
@@ -476,7 +476,7 @@ function getFriendData(inviteId) {
 function readShareCode() {
   console.log(`开始`)
   return new Promise(async resolve => {
-    $.get({url: `http://api.turinglabs.net/api/v1/jd/nian/read/${randomCount}/`}, (err, resp, data) => {
+    $.get({url: `https://code.chiang.fun/api/v1/jd/jdnian/read/${randomCount}/`, 'timeout': 10000}, (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
@@ -493,8 +493,8 @@ function readShareCode() {
         resolve(data);
       }
     })
-    // await $.wait(2000);
-    // resolve()
+    await $.wait(2000);
+    resolve()
   })
 }
 //格式化助力码
@@ -509,7 +509,7 @@ function shareCodesFormat() {
       const tempIndex = $.index > inviteCodes.length ? (inviteCodes.length - 1) : ($.index - 1);
       $.newShareCodes = inviteCodes[tempIndex].split('@');
     }
-    const readShareCodeRes = null //await readShareCode();
+    const readShareCodeRes = await readShareCode();
     if (readShareCodeRes && readShareCodeRes.code === 200) {
       $.newShareCodes = [...new Set([...$.newShareCodes, ...(readShareCodeRes.data || [])])];
     }
@@ -521,8 +521,15 @@ function requireConfig() {
   return new Promise(resolve => {
     console.log(`开始获取${$.name}配置文件\n`);
     //Node.js用户请在jdCookie.js处填写京东ck;
-    const shareCodes = []
+    let shareCodes = []
     console.log(`共${cookiesArr.length}个京东账号\n`);
+    if ($.isNode() && process.env.JDNIAN_SHARECODES) {
+      if (process.env.JDNIAN_SHARECODES.indexOf('\n') > -1) {
+        shareCodes = process.env.JDNIAN_SHARECODES.split('\n');
+      } else {
+        shareCodes = process.env.JDNIAN_SHARECODES.split('&');
+      }
+    }
     $.shareCodesArr = [];
     if ($.isNode()) {
       Object.keys(shareCodes).forEach((item) => {
