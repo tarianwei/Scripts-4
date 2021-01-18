@@ -2,7 +2,7 @@
  * @Author: shylocks https://github.com/shylocks
  * @Date: 2021-01-16 21:25:41
  * @Last Modified by:   TongLin138
- * @Last Modified time: 2021-01-17 09:00:00
+ * @Last Modified time: 2021-01-18 10:00:00
  */
 
 const $ = new Env('工业品爱消除');
@@ -247,7 +247,7 @@ function getTaskList() {
                 if (task.res.sName === "闯关集星") {
                   $.level = task.state.value + 1
                   console.log(`当前关卡：${$.level}`)
-                  while ($.strength >= 5) {
+                  while ($.strength >= 5 && $.level <= 240) {
                     await beginLevel()
                   }
                 } else if (task.res.sName === "逛逛店铺" || task.res.sName === "浏览会场") {
