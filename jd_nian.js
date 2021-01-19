@@ -2,7 +2,7 @@
  * @Author: shylocks https://github.com/shylocks
  * @Date: 2021-01-18 09:35:00 
  * @Last Modified by: TongLin138
- * @Last Modified time: 2021-01-19 12:00:00
+ * @Last Modified time: 2021-01-19 15:00:00
  */
 
 const $ = new Env('京东炸年兽🧨');
@@ -80,12 +80,18 @@ async function jdNian() {
   try {
     await getHomeData()
     if(!$.secretp) return
+    await $.wait(2000)
+    await killCouponList()
+    await $.wait(2000)
     await map()
+    await $.wait(2000)
     await queryMaterials()
     await getTaskList()
     await $.wait(1000)
     await doTask()
+    await $.wait(2000)
     await helpFriends()
+    await $.wait(2000)
     await getHomeData(true)
     await showMsg()
   } catch (e) {
@@ -530,7 +536,11 @@ function queryMaterials() {
           if (safeGet(data)) {
             data = JSON.parse(data);
             if(data.code==='0') {
-              for(let vo of data.data.viewLogo.list){
+              let shopList = data.data.viewLogo.list.concat(data.data.bottomLogo.list)
+              let nameList = []
+              for(let vo of shopList){
+                if(nameList.includes(vo.name)) continue
+                nameList.push(vo.name)
                 console.log(`去做${vo.name}店铺任务`)
                 await shopLotteryInfo(vo.desc)
                 await $.wait(2000)
@@ -546,6 +556,7 @@ function queryMaterials() {
     })
   })
 }
+
 function shopLotteryInfo(shopSign) {
   let body = {"shopSign":shopSign}
   return new Promise(resolve => {
@@ -619,72 +630,6 @@ function doShopLottery(shopSign) {
                 console.log(`抽奖成功，获得${JSON.stringify(result)}`)
             }else{
               console.log(`抽奖失败`)
-            }
-          }
-        }
-      } catch (e) {
-        $.logErr(e, resp)
-      } finally {
-        resolve();
-      }
-    })
-  })
-}
-function signInRead(shopSign) {
-  let body = {"shopSign":shopSign}
-  return new Promise(resolve => {
-    $.post(taskPostUrl("nian_shopSignInRead", body, "nian_shopSignInRead"), async (err, resp, data) => {
-      try {
-        if (err) {
-          console.log(`${JSON.stringify(err)}`)
-          console.log(`${$.name} API请求失败，请检查网路重试`)
-        } else {
-          if (safeGet(data)) {
-            data = JSON.parse(data);
-            if(data.code===0 && data.data && data.data.result && data.data.result.signInTag) {
-              await signInWrite(shopSign)
-            } else{
-              console.log(`店铺已签到过`)
-            }
-          }
-        }
-      } catch (e) {
-        $.logErr(e, resp)
-      } finally {
-        resolve();
-      }
-    })
-  })
-}
-function signInWrite(shopSign) {
-  let temp = {
-    "shopSign": shopSign,
-  }
-  const extraData = {
-    "jj": 6,
-    "buttonid": "jmdd-react-smash_0",
-    "sceneid": "homePageh5",
-    "appid": '50073'
-  }
-  let body = {
-    ...encode(temp, $.secretp, extraData),
-    shopSign:shopSign
-  }
-  return new Promise(resolve => {
-    $.post(taskPostUrl("nian_shopSignInWrite", body, "nian_shopSignInWrite"), async (err, resp, data) => {
-      try {
-        if (err) {
-          console.log(`${JSON.stringify(err)}`)
-          console.log(`${$.name} API请求失败，请检查网路重试`)
-        } else {
-          if (safeGet(data)) {
-            data = JSON.parse(data);
-            if (data.data.bizCode === 0) {
-              if(data.data.result.score)
-                console.log(`签到成功，获得${data.data.result.score}爆竹🧨`)
-            }
-            else{
-              console.log(data.data.bizMsg)
             }
           }
         }
@@ -795,6 +740,75 @@ function pkAssignGroup(inviteId) {
     })
   })
 }
+function killCouponList() {
+  return new Promise(resolve => {
+    $.post(taskPostUrl("nian_killCouponList", {}, "nian_killCouponList"), async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          if (safeGet(data)) {
+            data = JSON.parse(data);
+            if (data.data && data.data.bizCode === 0) {
+              await $.wait(2000)
+              for(let vo of data.data.result){
+                if(!vo.status){
+                  console.log(`去领取${vo['productName']}优惠券`)
+                  await killCoupon(vo['skuId'])
+                  await $.wait(2000)
+                }
+              }
+            }
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
+function killCoupon(skuId) {
+  let temp = {
+    "skuId": skuId,
+    "rnd": getRnd(),
+    "inviteId": "-1",
+    "stealId": "-1"
+  }
+  const extraData = {
+    "jj": 6,
+    "buttonid": "jmdd-react-smash_0",
+    "sceneid": "homePageh5",
+    "appid": '50073'
+  }
+  let body = encode(temp, $.secretp, extraData);
+  body['skuId'] = skuId
+  return new Promise(resolve => {
+    $.post(taskPostUrl("nian_killCoupon", body, "nian_killCoupon"), async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          if (safeGet(data)) {
+            data = JSON.parse(data);
+            if (data.data && data.data.bizCode === 0) {
+              console.log(`领取成功，获得${data.data.result.score}爆竹🧨`)
+            }else{
+              console.log(data.data.bizMsg)
+            }
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
 function readShareCode() {
   console.log(`开始`)
   return new Promise(async resolve => {
@@ -878,7 +892,7 @@ function taskPostUrl(function_id, body = {}, function_id2) {
       "origin": "https://h5.m.jd.com",
       "referer": "https://h5.m.jd.com/",
       'Content-Type': 'application/x-www-form-urlencoded',
-      "User-Agent":  "jdapp;iPhone;9.3.5;14.3;bf1f9a94239880f59a8f3b018a3aadf380e216fc;network/wifi;ADID/C1F5A079-892C-4995-8CFD-9CC43BDE88E7;supportApplePay/0;hasUPPay/0;hasOCPay/0;model/iPhone10,3;addressid/4045330010;supportBestPay/0;appBuild/167515;jdSupportDarkMode/0;pv/637.2;apprpd/Home_Main;ref/JDMainPageViewController;psq/1;ads/;psn/bf1f9a94239880f59a8f3b018a3aadf380e216fc|745;jdv/0|iosapp|t_335139774|appshare|Wxfriends|1610699748309|1610699752;adk/;app_device/IOS;pap/JA2015_311210|9.3.5|IOS 14.3;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1",
+      "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.3.5;14.3;bf1f9a94239880f59a8f3b018a3aadf380e216fc;network/wifi;ADID/C1F5A079-892C-4995-8CFD-9CC43BDE88E7;supportApplePay/0;hasUPPay/0;hasOCPay/0;model/iPhone10,3;addressid/4045330010;supportBestPay/0;appBuild/167515;jdSupportDarkMode/0;pv/637.2;apprpd/Home_Main;ref/JDMainPageViewController;psq/1;ads/;psn/bf1f9a94239880f59a8f3b018a3aadf380e216fc|745;jdv/0|iosapp|t_335139774|appshare|Wxfriends|1610699748309|1610699752;adk/;app_device/IOS;pap/JA2015_311210|9.3.5|IOS 14.3;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1")
     }
   }
 }
@@ -894,7 +908,7 @@ function TotalBean() {
         "Connection": "keep-alive",
         "Cookie": cookie,
         "Referer": "https://wqs.jd.com/my/jingdou/my.shtml?sceneval=2",
-        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0")
+        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.3.5;14.3;bf1f9a94239880f59a8f3b018a3aadf380e216fc;network/wifi;ADID/C1F5A079-892C-4995-8CFD-9CC43BDE88E7;supportApplePay/0;hasUPPay/0;hasOCPay/0;model/iPhone10,3;addressid/4045330010;supportBestPay/0;appBuild/167515;jdSupportDarkMode/0;pv/637.2;apprpd/Home_Main;ref/JDMainPageViewController;psq/1;ads/;psn/bf1f9a94239880f59a8f3b018a3aadf380e216fc|745;jdv/0|iosapp|t_335139774|appshare|Wxfriends|1610699748309|1610699752;adk/;app_device/IOS;pap/JA2015_311210|9.3.5|IOS 14.3;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1")
       }
     }
     $.post(options, (err, resp, data) => {
