@@ -2,7 +2,7 @@
  * @Author: lxk0301 https://github.com/lxk0301
  * @Date: 2021-01-12 16:00:00 
  * @Last Modified by: TongLin138
- * @Last Modified time: 2021-01-19 09:00:00
+ * @Last Modified time: 2021-01-19 20:00:00
  */
 
 const $ = new Env('宠汪汪偷好友积分与狗粮');
@@ -62,6 +62,8 @@ if ($.isNode() && process.env.jdJoyStealCoin) {
       $.index = i + 1;
       $.isLogin = true;
       $.nickName = '';
+      $.HelpFeed = ctrTemp;
+      if (!ctrTemp) $.HelpFeed = true
       await TotalBean();
       console.log(`\n开始【京东账号${$.index}】${$.nickName || $.UserName}\n`);
       if (!$.isLogin) {
@@ -137,7 +139,7 @@ async function jdJoySteal() {
             console.log('帮好友喂食失败，狗粮不足10g 跳出\n');
             break
           }
-          if (!ctrTemp) {
+          if (!$.HelpFeed) {
             console.log('您已设置不为好友喂食，现在跳过喂食，如需为好友喂食请在BoxJs打开喂食开关或者更改脚本 jdJoyHelpFeed 处');
             break
           }
@@ -206,7 +208,7 @@ async function stealFriendCoinFun() {
 //给好友喂食
 async function helpFriendsFeed() {
   if ($.help_feed !== 200) {
-    if (ctrTemp) {
+    if ($.HelpFeed) {
       console.log(`\n开始给好友喂食`);
       for (let friends of $.allFriends) {
         const { friendPin, status, stealStatus } = friends;
@@ -217,6 +219,11 @@ async function helpFriendsFeed() {
           $.helpFeedStatus = helpFeedRes.errorCode;
           if (helpFeedRes && helpFeedRes.errorCode === 'help_ok' && helpFeedRes.success) {
             console.log(`帮好友[${friendPin}]喂食10g狗粮成功,你获得10积分\n`);
+            if (!ctrTemp) {
+              $.log('为完成为好友单独喂食一次的任务，故此处进行喂食一次')
+              $.HelpFeed = false;
+              break
+            }
             $.helpFood += 10;
           } else if (helpFeedRes && helpFeedRes.errorCode === 'chance_full') {
             console.log('喂食已达上限,不再喂食\n')
@@ -475,13 +482,13 @@ function showMsg() {
     message += $.stealFriendCoin;
     message += $.stealFood;
     message += $.helpFood;
-    let ctrTemp;
+    let flag;
     if ($.getdata('jdJoyStealNotify')) {
-      ctrTemp = `${$.getdata('jdJoyStealNotify')}` === 'false';
+      flag = `${$.getdata('jdJoyStealNotify')}` === 'false';
     } else {
-      ctrTemp = `${jdNotify}` === 'false';
+      flag = `${jdNotify}` === 'false';
     }
-    if (ctrTemp) {
+    if (flag) {
       $.msg($.name, '', message);
     } else {
       $.log(`\n${message}\n`);
