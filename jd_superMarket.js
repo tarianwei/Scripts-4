@@ -2,7 +2,7 @@
  * @Author: lxk0301 https://github.com/lxk0301
  * @Date: 2021-01-12 16:00:00 
  * @Last Modified by: TongLin138
- * @Last Modified time: 2021-01-15 10:00:00
+ * @Last Modified time: 2021-01-19 10:00:00
  */
 
 const $ = new Env('东东超市');
@@ -300,7 +300,7 @@ async function businessCircleActivity() {
     console.log(`\njoinStatus:${joinStatus}`);
     console.log(`pkStatus:${pkStatus}\n`);
     if (joinStatus === 0) {
-      console.log(`\n注：PK会在每天的七点自动随机加入lxk0301创建的队伍\n`)
+      console.log(`\n注：PK会在每天的七点自动随机加入LXK9301创建的队伍\n`)
       await updatePkActivityId();
       if (!$.updatePkActivityIdRes) await updatePkActivityIdCDN('https://gitee.com/lxk0301/updateTeam/raw/master/jd_updateTeam.json');
       if (!$.updatePkActivityIdRes) await updatePkActivityIdCDN('https://cdn.jsdelivr.net/gh/LXK9301/updateTeam@master/jd_updateTeam.json');
@@ -359,12 +359,9 @@ async function businessCircleActivity() {
     }
     if (pkStatus === 1) {
       console.log(`商圈PK进行中\n`)
-    } else if (pkStatus === 2) {
-      console.log(`商圈PK结束了`)
-      if (prizeInfo.pkPrizeStatus === 2) {
-        console.log(`开始领取商圈PK奖励`);
+      if (!teamId) {
         const receivedPkTeamPrize = await smtg_receivedPkTeamPrize();
-        console.log(`商圈PK奖励领取结果：${JSON.stringify(receivedPkTeamPrize)}`)
+        console.log(`商圈PK奖励领取结果：${JSON.stringify(receivedPkTeamPrize)}\n`)
         if (receivedPkTeamPrize.data.bizCode === 0) {
           if (receivedPkTeamPrize.data.result.pkResult === 1) {
             const { pkTeamPrizeInfoVO } = receivedPkTeamPrize.data.result;
@@ -378,6 +375,26 @@ async function businessCircleActivity() {
             }
           }
         }
+      }
+    } else if (pkStatus === 2) {
+      console.log(`商圈PK结束了`)
+      if (prizeInfo.pkPrizeStatus === 2) {
+        console.log(`开始领取商圈PK奖励`);
+        // const receivedPkTeamPrize = await smtg_receivedPkTeamPrize();
+        // console.log(`商圈PK奖励领取结果：${JSON.stringify(receivedPkTeamPrize)}`)
+        // if (receivedPkTeamPrize.data.bizCode === 0) {
+        //   if (receivedPkTeamPrize.data.result.pkResult === 1) {
+        //     const { pkTeamPrizeInfoVO } = receivedPkTeamPrize.data.result;
+        //     message += `【商圈PK奖励】${pkTeamPrizeInfoVO.blueCoin}蓝币领取成功\n`;
+        //     if ($.isNode()) {
+        //       await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}`, `【京东账号${$.index}】 ${$.nickName}\n【商圈队伍】PK获胜\n【奖励】${pkTeamPrizeInfoVO.blueCoin}蓝币领取成功`)
+        //     }
+        //   } else if (receivedPkTeamPrize.data.result.pkResult === 2) {
+        //     if ($.isNode()) {
+        //       await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}`, `【京东账号${$.index}】 ${$.nickName}\n【商圈队伍】PK失败`)
+        //     }
+        //   }
+        // }
       } else if (prizeInfo.pkPrizeStatus === 1) {
         console.log(`商圈PK奖励已经领取\n`)
       }
@@ -442,11 +459,11 @@ async function businessCircleActivity() {
       }
     }
   } else if (businessCirclePKDetailRes && businessCirclePKDetailRes.data.bizCode === 206) {
-    console.log(`您暂未加入商圈,现在给您加入lxk0301的商圈`);
+    console.log(`您暂未加入商圈,现在给您加入LXK9301的商圈`);
     const joinBusinessCircleRes = await smtg_joinBusinessCircle(myCircleId);
     console.log(`参加商圈结果：${JSON.stringify(joinBusinessCircleRes)}`)
     if (joinBusinessCircleRes.data.bizCode !== 0) {
-      console.log(`您加入lxk0301的商圈失败，现在给您随机加入一个商圈`);
+      console.log(`您加入LXK9301的商圈失败，现在给您随机加入一个商圈`);
       const BusinessCircleList = await smtg_getBusinessCircleList();
       if (BusinessCircleList.data.bizCode === 0) {
         const { businessCircleVOList } = BusinessCircleList.data.result;
