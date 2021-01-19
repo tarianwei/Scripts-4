@@ -2,7 +2,7 @@
  * @Author: lxk0301 https://github.com/lxk0301
  * @Date: 2021-01-12 16:00:00 
  * @Last Modified by: TongLin138
- * @Last Modified time: 2021-01-18 12:00:00
+ * @Last Modified time: 2021-01-19 17:00:00
  */
 
 const $ = new Env('京喜工厂');
@@ -10,7 +10,7 @@ const JD_API_HOST = 'https://m.jingxi.com';
 
 const notify = $.isNode() ? require('./sendNotify') : '';
 let jdNotify = true;//是否关闭通知，false打开通知推送，true关闭通知推送
-const randomCount = $.isNode() ? 20 : 5;
+const randomCount = $.isNode() ? 20 : 0;
 let tuanActiveId = `6S9y4sJUfA2vPQP6TLdVIQ==`;
 const jxOpenUrl = `openjd://virtual?params=%7B%20%22category%22:%20%22jump%22,%20%22des%22:%20%22m%22,%20%22url%22:%20%22https://wqsd.jd.com/pingou/dream_factory/index.html%22%20%7D`;
 let cookiesArr = [], cookie = '', message = '';
@@ -907,7 +907,7 @@ function QueryActiveConfig() {
         "Cookie": cookie,
         "Host": "m.jingxi.com",
         "Referer": "https://st.jingxi.com/pingou/dream_factory/divide.html",
-        "User-Agent": "jdpingou;iPhone;4.1.2;14.3;d8bceecd8091c024cef6bf4d1db168456e773c8b;network/wifi;model/iPhone10,3;appBuild/100413;ADID/00000000-0000-0000-0000-000000000000;supportApplePay/1;hasUPPay/0;pushNoticeIsOpen/0;hasOCPay/0;supportBestPay/0;session/14;pap/JA2019_3111789;brand/apple;supportJDSHWK/1;"
+        "User-Agent": "jdpingou;iPhone;4.1.4;14.3;d8bceecd8091c024cef6bf4d1db168456e773c8b;network/wifi;model/iPhone10,3;appBuild/100415;ADID/00000000-0000-0000-0000-000000000000;supportApplePay/1;hasUPPay/0;pushNoticeIsOpen/0;hasOCPay/0;supportBestPay/0;session/19;pap/JA2019_3111789;brand/apple;supportJDSHWK/1;"
       }
     }
     $.get(options, (err, resp, data) => {
@@ -947,7 +947,7 @@ function QueryTuan(activeId, tuanId) {
         "Cookie": cookie,
         "Host": "m.jingxi.com",
         "Referer": "https://st.jingxi.com/pingou/dream_factory/divide.html",
-        "User-Agent": "jdpingou;iPhone;4.1.2;14.3;d8bceecd8091c024cef6bf4d1db168456e773c8b;network/wifi;model/iPhone10,3;appBuild/100413;ADID/00000000-0000-0000-0000-000000000000;supportApplePay/1;hasUPPay/0;pushNoticeIsOpen/0;hasOCPay/0;supportBestPay/0;session/14;pap/JA2019_3111789;brand/apple;supportJDSHWK/1;"
+        "User-Agent": "jdpingou;iPhone;4.1.4;14.3;d8bceecd8091c024cef6bf4d1db168456e773c8b;network/wifi;model/iPhone10,3;appBuild/100415;ADID/00000000-0000-0000-0000-000000000000;supportApplePay/1;hasUPPay/0;pushNoticeIsOpen/0;hasOCPay/0;supportBestPay/0;session/19;pap/JA2019_3111789;brand/apple;supportJDSHWK/1;"
       }
     }
     $.get(options, (err, resp, data) => {
@@ -986,7 +986,7 @@ function CreateTuan() {
         "Cookie": cookie,
         "Host": "m.jingxi.com",
         "Referer": "https://st.jingxi.com/pingou/dream_factory/divide.html",
-        "User-Agent": "jdpingou;iPhone;4.1.2;14.3;d8bceecd8091c024cef6bf4d1db168456e773c8b;network/wifi;model/iPhone10,3;appBuild/100413;ADID/00000000-0000-0000-0000-000000000000;supportApplePay/1;hasUPPay/0;pushNoticeIsOpen/0;hasOCPay/0;supportBestPay/0;session/14;pap/JA2019_3111789;brand/apple;supportJDSHWK/1;"
+        "User-Agent": "jdpingou;iPhone;4.1.4;14.3;d8bceecd8091c024cef6bf4d1db168456e773c8b;network/wifi;model/iPhone10,3;appBuild/100415;ADID/00000000-0000-0000-0000-000000000000;supportApplePay/1;hasUPPay/0;pushNoticeIsOpen/0;hasOCPay/0;supportBestPay/0;session/19;pap/JA2019_3111789;brand/apple;supportJDSHWK/1;"
       }
     }
     $.get(options, (err, resp, data) => {
@@ -1079,7 +1079,7 @@ function QueryAllTuan() {
         "Cookie": cookie,
         "Host": "m.jingxi.com",
         "Referer": "https://st.jingxi.com/pingou/dream_factory/divide.html",
-        "User-Agent": "jdpingou;iPhone;4.1.2;14.3;d8bceecd8091c024cef6bf4d1db168456e773c8b;network/wifi;model/iPhone10,3;appBuild/100413;ADID/00000000-0000-0000-0000-000000000000;supportApplePay/1;hasUPPay/0;pushNoticeIsOpen/0;hasOCPay/0;supportBestPay/0;session/14;pap/JA2019_3111789;brand/apple;supportJDSHWK/1;"
+        "User-Agent": "jdpingou;iPhone;4.1.4;14.3;d8bceecd8091c024cef6bf4d1db168456e773c8b;network/wifi;model/iPhone10,3;appBuild/100415;ADID/00000000-0000-0000-0000-000000000000;supportApplePay/1;hasUPPay/0;pushNoticeIsOpen/0;hasOCPay/0;supportBestPay/0;session/19;pap/JA2019_3111789;brand/apple;supportJDSHWK/1;"
       }
     }
     $.get(options, async (err, resp, data) => {
@@ -1136,7 +1136,7 @@ function tuanAward(activeId, tuanId, isTuanLeader = true) {
         "Cookie": cookie,
         "Host": "m.jingxi.com",
         "Referer": "https://st.jingxi.com/pingou/dream_factory/divide.html",
-        "User-Agent": "jdpingou;iPhone;4.1.2;14.3;d8bceecd8091c024cef6bf4d1db168456e773c8b;network/wifi;model/iPhone10,3;appBuild/100413;ADID/00000000-0000-0000-0000-000000000000;supportApplePay/1;hasUPPay/0;pushNoticeIsOpen/0;hasOCPay/0;supportBestPay/0;session/14;pap/JA2019_3111789;brand/apple;supportJDSHWK/1;"
+        "User-Agent": "jdpingou;iPhone;4.1.4;14.3;d8bceecd8091c024cef6bf4d1db168456e773c8b;network/wifi;model/iPhone10,3;appBuild/100415;ADID/00000000-0000-0000-0000-000000000000;supportApplePay/1;hasUPPay/0;pushNoticeIsOpen/0;hasOCPay/0;supportBestPay/0;session/19;pap/JA2019_3111789;brand/apple;supportJDSHWK/1;"
       }
     }
     $.get(options, async (err, resp, data) => {
@@ -1420,7 +1420,7 @@ function taskurl(functionId, body = '') {
       'Host': 'm.jingxi.com',
       'Accept': '*/*',
       'Connection': 'keep-alive',
-      'User-Agent': 'jdpingou;iPhone;4.1.2;14.3;d8bceecd8091c024cef6bf4d1db168456e773c8b;network/wifi;model/iPhone10,3;appBuild/100413;ADID/00000000-0000-0000-0000-000000000000;supportApplePay/1;hasUPPay/0;pushNoticeIsOpen/0;hasOCPay/0;supportBestPay/0;session/14;pap/JA2019_3111789;brand/apple;supportJDSHWK/1;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148',
+      'User-Agent': 'jdpingou;iPhone;4.1.4;14.3;d8bceecd8091c024cef6bf4d1db168456e773c8b;network/wifi;model/iPhone10,3;appBuild/100415;ADID/00000000-0000-0000-0000-000000000000;supportApplePay/1;hasUPPay/0;pushNoticeIsOpen/0;hasOCPay/0;supportBestPay/0;session/19;pap/JA2019_3111789;brand/apple;supportJDSHWK/1;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148',
       'Accept-Language': 'zh-cn',
       'Referer': 'https://wqsd.jd.com/pingou/dream_factory/index.html',
       'Accept-Encoding': 'gzip, deflate, br',
@@ -1442,7 +1442,7 @@ function newtasksysUrl(functionId, taskId, stk) {
       'Host': 'm.jingxi.com',
       'Accept': '*/*',
       'Connection': 'keep-alive',
-      'User-Agent': "jdpingou;iPhone;4.1.2;14.3;d8bceecd8091c024cef6bf4d1db168456e773c8b;network/wifi;model/iPhone10,3;appBuild/100413;ADID/00000000-0000-0000-0000-000000000000;supportApplePay/1;hasUPPay/0;pushNoticeIsOpen/0;hasOCPay/0;supportBestPay/0;session/14;pap/JA2019_3111789;brand/apple;supportJDSHWK/1;",
+      'User-Agent': "jdpingou;iPhone;4.1.4;14.3;d8bceecd8091c024cef6bf4d1db168456e773c8b;network/wifi;model/iPhone10,3;appBuild/100415;ADID/00000000-0000-0000-0000-000000000000;supportApplePay/1;hasUPPay/0;pushNoticeIsOpen/0;hasOCPay/0;supportBestPay/0;session/19;pap/JA2019_3111789;brand/apple;supportJDSHWK/1;",
       'Accept-Language': 'zh-cn',
       'Referer': 'https://wqsd.jd.com/pingou/dream_factory/index.html',
       'Accept-Encoding': 'gzip, deflate, br',
