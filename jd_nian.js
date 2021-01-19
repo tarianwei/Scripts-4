@@ -2,7 +2,7 @@
  * @Author: shylocks https://github.com/shylocks
  * @Date: 2021-01-18 09:35:00 
  * @Last Modified by: TongLin138
- * @Last Modified time: 2021-01-18 17:00:00
+ * @Last Modified time: 2021-01-19 09:00:00
  */
 
 const $ = new Env('京东炸年兽🧨');
@@ -470,7 +470,7 @@ function getFriendData(inviteId) {
           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
           data = JSON.parse(data);
-          if (data && data.data['bizCode'] === 0) {
+          if (data.data && data.data['bizCode'] === 0) {
             $.itemId = data.data.result.homeMainInfo.guestInfo.itemId
             await collectScore('2',$.itemId,null,inviteId)
           }
