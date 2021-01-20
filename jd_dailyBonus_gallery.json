@@ -6,7 +6,6 @@
     "0 0 * * * https://raw.githubusercontent.com/TongLin138/Module/main/Tasks/jd_blueCoin.js , tag=JD_BlueCoin , img-url=https://raw.githubusercontent.com/58xinian/icon/master/jxc.png",
     "0 9 * * * https://raw.githubusercontent.com/TongLin138/Module/main/Tasks/jd_bean_change.js , tag=JD_Bean_Change , img-url=https://raw.githubusercontent.com/Orz-3/task/master/jd.png",
     "0 6 * * * https://raw.githubusercontent.com/TongLin138/Module/main/Tasks/jd_bean_home.js, tag=JD_Bean_Home , img-url=https://raw.githubusercontent.com/58xinian/icon/master/jd_bean_home.png",
-    "0 7 * * * https://raw.githubusercontent.com/TongLin138/Module/main/Tasks/jd_bj.js, tag=JD_BJ , img-url=https://raw.githubusercontent.com/Orz-3/task/master/jd.png",
     "0 0 * * * https://raw.githubusercontent.com/TongLin138/Module/main/Tasks/jd_bookshop.js, tag=JD_Bookshop, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jd_bookshop.png",
     "0 0 * * * https://raw.githubusercontent.com/TongLin138/Module/main/Tasks/jd_car.js, tag=JD_Car, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jd_car.png",
     "0 0 * * * https://raw.githubusercontent.com/TongLin138/Module/main/Tasks/jd_car_exchange.js, tag=JD_Car_Exchange, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jd_redPacket.png",
@@ -15,7 +14,6 @@
     "2 0 * * * https://raw.githubusercontent.com/TongLin138/Module/main/Tasks/jd_crazy_joy.js, tag=JD_Crazy_Joy , img-url=https://raw.githubusercontent.com/Orz-3/task/master/jd.png",
     "3 0 * * * https://raw.githubusercontent.com/TongLin138/Module/main/Tasks/jd_daily_egg.js, tag=JD_Daily_Egg , img-url=https://raw.githubusercontent.com/Orz-3/task/master/jd.png",
     "10 * * * * https://raw.githubusercontent.com/TongLin138/Module/main/Tasks/jd_dreamFactory.js, tag=JD_DreamFactory , img-url=https://github.com/58xinian/icon/raw/master/jdgc.png",
-    "11 * * * * https://raw.githubusercontent.com/TongLin138/Module/main/Tasks/jd_family.js, tag=JD_Family , img-url=https://raw.githubusercontent.com/58xinian/icon/master/jd_family.png",
     "0 6-18/6 * * * https://raw.githubusercontent.com/TongLin138/Module/main/Tasks/jd_fruit.js, tag=JD_Fruit , img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdnc.png",
     "30 0 * * * https://raw.githubusercontent.com/TongLin138/Module/main/Tasks/jd_health.js, tag=JD_Health , img-url=https://raw.githubusercontent.com/58xinian/icon/master/jd_redPacket.png",
     "10 * * * * https://raw.githubusercontent.com/TongLin138/Module/main/Tasks/jd_jdfactory.js, tag=JD_JDFactory , img-url=https://raw.githubusercontent.com/58xinian/icon/master/jd_factory.png",
@@ -28,8 +26,6 @@
     "15 10 * * * https://raw.githubusercontent.com/TongLin138/Module/main/Tasks/jd_lotteryMachine.js , tag=JD_LotteryMachine , img-url=https://raw.githubusercontent.com/Orz-3/task/master/jd.png",
     "10 0 * * * https://raw.githubusercontent.com/TongLin138/Module/main/Tasks/jd_kd.js, tag=JD_KD , img-url=https://raw.githubusercontent.com/58xinian/icon/master/jd_kd.png",
     "10-20/5 12 * * * https://raw.githubusercontent.com/TongLin138/Module/main/Tasks/jd_live.js, tag=JD_Live , img-url= https://raw.githubusercontent.com/58xinian/icon/master/jd_live_redrain.png",
-    "0 7 * * * https://raw.githubusercontent.com/TongLin138/Module/main/Tasks/jd_mh.js, tag=JD_MH, img-url=https://raw.githubusercontent.com/Orz-3/task/master/jd.png",
-    "10 7 * * * https://raw.githubusercontent.com/TongLin138/Module/main/Tasks/jd_ms.js, tag=JD_MS, img-url=https://raw.githubusercontent.com/Orz-3/task/master/jd.png",
     "15 */5 * * * https://raw.githubusercontent.com/TongLin138/Module/main/Tasks/jd_moneyTree.js , tag=JD_MoneyTree , img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdyqs.png",
     "20 0,20 * * * https://raw.githubusercontent.com/TongLin138/Module/main/Tasks/jd_necklace.js , tag=JD_Necklace , img-url=https://raw.githubusercontent.com/Orz-3/task/master/jd.png",
     "1 7 * * * https://raw.githubusercontent.com/TongLin138/Module/main/Tasks/jd_nh.js, tag=JD_NH, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jd_nh.png",
@@ -44,8 +40,6 @@
     "20 0 * * * https://raw.githubusercontent.com/TongLin138/Module/main/Tasks/jd_syj.js , tag=JD_SYJ , img-url=https://raw.githubusercontent.com/Orz-3/task/master/jd.png",
     "44 12 * * 6 https://raw.githubusercontent.com/TongLin138/Module/main/Tasks/jd_unbind.js, tag=JD_Unbind , img-url=https://raw.githubusercontent.com/58xinian/icon/master/jd_unbind.png",
     "55 23 * * * https://raw.githubusercontent.com/TongLin138/Module/main/Tasks/jd_unsubscribe.js , tag=JD_Unsubscribe , img-url=https://raw.githubusercontent.com/Orz-3/task/master/jd.png",
-    "15 7 * * * https://raw.githubusercontent.com/TongLin138/Module/main/Tasks/jd_wechat_sign.js , tag=JD_Wechat_Sign , img-url=https://raw.githubusercontent.com/Orz-3/task/master/jd.png",
     "5 0 * * * https://raw.githubusercontent.com/TongLin138/Module/main/Tasks/jx_sign.js, tag=JX_Sign, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jx_sign.png",
-    "15 17 * * * https://raw.githubusercontent.com/TongLin138/Module/main/backUp/xmSports.js, tag=MiSports , img-url=https://raw.githubusercontent.com/58xinian/icon/master/xmyd.png"
   ]
 }
