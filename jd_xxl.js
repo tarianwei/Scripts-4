@@ -2,7 +2,7 @@
  * @Author: shylocks https://github.com/shylocks
  * @Date: 2021-01-17 16:25:41
  * @Last Modified by: TongLin138
- * @Last Modified time: 2021-01-19 09:00:00
+ * @Last Modified time: 2021-01-21 09:00:00
  */
 
 const $ = new Env('东东爱消除');
@@ -82,7 +82,6 @@ function obj2param(obj) {
       }
       await shareCodesFormat()
       await jdBeauty()
-      await jdBeauty(false)
     }
   }
 })()
@@ -100,8 +99,9 @@ async function jdBeauty(help = true) {
   await getActInfo()
   await getTaskList()
   await getDailyMatch()
+  await play()
   // await marketGoods()
-  if(help)await helpFriends()
+  // if(help)await helpFriends()
 }
 async function helpFriends() {
   for (let code of $.newShareCodes) {
@@ -225,6 +225,10 @@ function checkLogin() {
                 $.not3Star.push(level.id)
               }
             }
+            if(data.role.allLevels.length)
+              $.level = parseInt(data.role.allLevels[data.role.allLevels.length-1]['id'])
+            else
+              $.level = 1
             if($.not3Star.length)
               console.log(`当前尚未三星的关卡为：${$.not3Star.join(',')}`)
             // SecrectUtil.InitEncryptInfo($.gameToken, $.gameId)
@@ -237,6 +241,22 @@ function checkLogin() {
       }
     })
   })
+}
+
+async function play() {
+  $.level += 1
+  console.log(`当前关卡：${$.level}`)
+  while ($.strength >= 5 && $.level <= 280) {
+    await beginLevel()
+  }
+  if($.not3Star.length && $.strength >= 5){
+    console.log(`去完成尚未三星的关卡`)
+    for(let level of $.not3Star){
+      $.level = parseInt(level)
+      await beginLevel()
+      if($.strength<5) break
+    }
+  }
 }
 
 function getTaskList() {
@@ -256,21 +276,7 @@ function getTaskList() {
             if (safeGet(data)) {
               data = JSON.parse(data)
               for (let task of data.tasks) {
-                if (task.res.sName === "闯关集星") {
-                  $.level = task.state.value + 1
-                  console.log(`当前关卡：${$.level}`)
-                  while ($.strength >= 5 && $.level <= 240) {
-                    await beginLevel()
-                  }
-                  if($.not3Star.length && $.strength >= 5){
-                    console.log(`去完成尚未三星的关卡`)
-                    for(let level of $.not3Star){
-                      $.level = parseInt(level)
-                      await beginLevel()
-                      if($.strength<5) break
-                    }
-                  }
-                } else if (task.res.sName === "逛逛店铺") {
+                if (task.res.sName === "逛逛店铺") {
                   if (task.state.iFreshTimes < task.res.iFreshTimes)
                     console.log(`去做${task.res.sName}任务`)
                   for (let i = task.state.iFreshTimes; i < task.res.iFreshTimes; ++i) {

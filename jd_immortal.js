@@ -2,7 +2,7 @@
  * @Author: shylocks https://github.com/shylocks
  * @Date: 2021-01-20 15:00:00
  * @Last Modified by:   TongLin138
- * @Last Modified time: 2021-01-20 18:00:00
+ * @Last Modified time: 2021-01-21 09:00:00
  */
 
 const $ = new Env('京东神仙书院');
@@ -78,6 +78,7 @@ const inviteCodes = [
     })
 async function jdNian() {
   try {
+    $.risk = false
     await getHomeData()
     if($.risk) return
     await getTaskList($.cor)
@@ -259,7 +260,7 @@ function getTaskList(body={}) {
 function readShareCode() {
   console.log(`开始`)
   return new Promise(async resolve => {
-    $.get({url: `https://code.chiang.fun/api/v1/jd/jdnian/read/${randomCount}/`, 'timeout': 10000}, (err, resp, data) => {
+    $.get({url: `http://jd.turinglabs.net/api/v2/jd/immortal/read/${randomCount}/`, 'timeout': 10000}, (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
@@ -292,7 +293,7 @@ function shareCodesFormat() {
       const tempIndex = $.index > inviteCodes.length ? (inviteCodes.length - 1) : ($.index - 1);
       $.newShareCodes = inviteCodes[tempIndex].split('@');
     }
-    const readShareCodeRes = null // await readShareCode();
+    const readShareCodeRes = await readShareCode();
     if (readShareCodeRes && readShareCodeRes.code === 200) {
       $.newShareCodes = [...new Set([...$.newShareCodes, ...(readShareCodeRes.data || [])])];
     }
@@ -301,7 +302,7 @@ function shareCodesFormat() {
   })
 }
 function requireConfig() {
-  return new Promise(resolve => {
+  return new Promise(async resolve => {
     console.log(`开始获取${$.name}配置文件\n`);
     //Node.js用户请在jdCookie.js处填写京东ck;
     let shareCodes = []
@@ -320,7 +321,7 @@ function requireConfig() {
           $.shareCodesArr.push(shareCodes[item])
         }
       })
-      $.cor = process.env.JD_IMMORTAL_LATLON?JSON.parse(process.env.JD_IMMORTAL_LATLON):{}
+      $.cor = process.env.JD_IMMORTAL_LATLON?JSON.parse(process.env.JD_IMMORTAL_LATLON):(await getLatLng())
     }else{
       $.cor = $.getdata("IMMORTAL_LATLON")?JSON.parse($.getdata("IMMORTAL_LATLON")):{}
     }
@@ -328,6 +329,39 @@ function requireConfig() {
     console.log(`您提供了${$.shareCodesArr.length}个账号的${$.name}助力码\n`);
     resolve()
   })
+}
+
+// 自动获取经纬度
+function getLatLng() {
+  return new Promise(resolve => {
+    try {
+      console.log('开始自动获取经纬度 lat lng ……');
+      $.get({
+        url: 'https://jingweidu.bmcx.com/web_system/bmcx_com_www/system/file/jingweidu/api/?v=20031911',
+        headers: {
+          "referer": "https://jingweidu.bmcx.com/",
+          'Content-Type': 'text/html; charset=utf-8',
+          "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 11_1_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36"
+        }
+      }, async (err, resp, data) => {
+        const res = data.match(/qq\.maps\.LatLng\(([\d\.]+), ([\d\.]+)\)/);
+        let lat = res[1];
+        let lng = res[2];
+        if (lat > 0 && lng > 0) {
+          resolve({
+            'lng': lng,
+            'lat': lat
+          });
+          return;
+        }
+        console.log('自动获取经纬度 lat lng 失败，返回经纬度结果错误');
+        resolve({});
+      });
+    } catch (e) {
+      console.log('自动获取经纬度 lat lng 失败，触发异常');
+      resolve({});
+    }
+  });
 }
 
 function taskPostUrl(function_id, body = {}, function_id2) {
@@ -344,7 +378,7 @@ function taskPostUrl(function_id, body = {}, function_id2) {
       "origin": "https://h5.m.jd.com",
       "referer": "https://h5.m.jd.com/",
       'Content-Type': 'application/x-www-form-urlencoded',
-      "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0")
+      "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.3.5;14.3;bf1f9a94239880f59a8f3b018a3aadf380e216fc;network/wifi;ADID/C1F5A079-892C-4995-8CFD-9CC43BDE88E7;supportApplePay/0;hasUPPay/0;hasOCPay/0;model/iPhone10,3;addressid/827662943;supportBestPay/0;appBuild/167515;jdSupportDarkMode/0;pv/678.4;apprpd/Home_Main;ref/JDMainPageViewController;psq/3;ads/;psn/bf1f9a94239880f59a8f3b018a3aadf380e216fc|792;jdv/0|iosapp|t_335139774|appshare|CopyURL|1610986946779|1610986950;adk/;app_device/IOS;pap/JA2015_311210|9.3.5|IOS 14.3;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1")
     }
   }
 }
@@ -361,7 +395,7 @@ function taskPostUrl2(function_id, body = {}, function_id2) {
       "origin": "https://h5.m.jd.com",
       "referer": "https://h5.m.jd.com/",
       'Content-Type': 'application/x-www-form-urlencoded',
-      "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0")
+      "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.3.5;14.3;bf1f9a94239880f59a8f3b018a3aadf380e216fc;network/wifi;ADID/C1F5A079-892C-4995-8CFD-9CC43BDE88E7;supportApplePay/0;hasUPPay/0;hasOCPay/0;model/iPhone10,3;addressid/827662943;supportBestPay/0;appBuild/167515;jdSupportDarkMode/0;pv/678.4;apprpd/Home_Main;ref/JDMainPageViewController;psq/3;ads/;psn/bf1f9a94239880f59a8f3b018a3aadf380e216fc|792;jdv/0|iosapp|t_335139774|appshare|CopyURL|1610986946779|1610986950;adk/;app_device/IOS;pap/JA2015_311210|9.3.5|IOS 14.3;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1")
     }
   }
 }
@@ -377,7 +411,7 @@ function TotalBean() {
         "Connection": "keep-alive",
         "Cookie": cookie,
         "Referer": "https://wqs.jd.com/my/jingdou/my.shtml?sceneval=2",
-        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0")
+        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.3.5;14.3;bf1f9a94239880f59a8f3b018a3aadf380e216fc;network/wifi;ADID/C1F5A079-892C-4995-8CFD-9CC43BDE88E7;supportApplePay/0;hasUPPay/0;hasOCPay/0;model/iPhone10,3;addressid/827662943;supportBestPay/0;appBuild/167515;jdSupportDarkMode/0;pv/678.4;apprpd/Home_Main;ref/JDMainPageViewController;psq/3;ads/;psn/bf1f9a94239880f59a8f3b018a3aadf380e216fc|792;jdv/0|iosapp|t_335139774|appshare|CopyURL|1610986946779|1610986950;adk/;app_device/IOS;pap/JA2015_311210|9.3.5|IOS 14.3;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1")
       }
     }
     $.post(options, (err, resp, data) => {
