@@ -1,11 +1,11 @@
 /*
- * @Author: lxk0301 https://github.com/lxk0301
- * @Date: 2021-01-12 16:00:00 
+ * @Author: shylocks https://github.com/shylocks
+ * @Date: 2021-01-20 09:00:00 
  * @Last Modified by: TongLin138
- * @Last Modified time: 2021-01-20 20:00:00
+ * @Last Modified time: 2021-01-21 09:00:00
  */
 
-const $ = new Env('直播间红包雨');
+const $ = new Env('官方号直播红包雨');
 
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
@@ -18,7 +18,7 @@ if ($.isNode()) {
   })
   if (process.env.JD_DEBUG && process.env.JD_DEBUG === 'false') console.log = () => {
   };
-} else {
+}else {
   let cookiesData = $.getdata('CookiesJD') || "[]";
   cookiesData = jsonParse(cookiesData);
   cookiesArr = cookiesData.map(item => item.cookie);
@@ -29,42 +29,37 @@ if ($.isNode()) {
 }
 const JD_API_HOST = 'https://api.m.jd.com/api';
 let ids = {
-  '19': 'RRArq4bmitwjmyDY8nrfASmKhoojen',
-  '20': 'RRA3b7VFEeTmjy2tK2BPySVEqNeeTdA',
-  '21': 'RRA2eQJiEhyy1WPx95M3QusCXkLstjw'
+  '0':'RRA2ZMK66tw36bRAZTpb8k9zv8rwaxb',
+  '9':'RRA2ZMK66tw36bRAZTpb8k9zv8rwaxb',
+  '11':'RRA2ZMK66tw36bRAZTpb8k9zv8rwaxb',
+  '13':'RRA2ZMK66tw36bRAZTpb8k9zv8rwaxb',
+  '15':'RRA2ZMK66tw36bRAZTpb8k9zv8rwaxb',
+  '17':'RRA2ZMK66tw36bRAZTpb8k9zv8rwaxb',
+  '19':'RRA2ZMK66tw36bRAZTpb8k9zv8rwaxb',
+  '20': 'RRA2ZMK66tw36bRAZTpb8k9zv8rwaxb',
+  '21': 'RRA2ZMK66tw36bRAZTpb8k9zv8rwaxb',
+  '22': 'RRA2ZMK66tw36bRAZTpb8k9zv8rwaxb',
+  '23': 'RRA2ZMK66tw36bRAZTpb8k9zv8rwaxb'
 }
 !(async () => {
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
     return;
   }
-  if ($.isNode() && process.env.QINIU_SK) {
-    const fs = require('fs')
-    let data = fs.readFileSync('/home/shylocks/Projects/updateTeam/jd_live_redRain_half.json')
-    data = JSON.parse(data.toString())
-    $.activityId = data.activityId
-    $.st = data.startTime
-    $.ed = data.endTime
-    console.log(`从本地文件读取，下一场红包雨id：${$.activityId}`)
-    console.log(`下一场红包雨开始时间：${new Date(data.startTime)}`)
-    console.log(`下一场红包雨结束时间：${new Date(data.endTime)}`)
-  }
-  else {
-    await getRedRain();
-  }
+  await getRedRain();
 
   let nowTs = new Date().getTime()
   if (!($.st <= nowTs && nowTs < $.ed)) {
     $.log(`远程红包雨配置获取错误，从本地读取配置`)
-    let hour = (new Date().getUTCHours() + 8) % 24
-    if (ids[hour]) {
+    let hour = (new Date().getUTCHours() + 8) %24
+    if (ids[hour]){
       $.activityId = ids[hour]
       $.log(`本地红包雨配置获取成功`)
-    } else {
+    } else{
       $.log(`无法从本地读取配置，请检查运行时间`)
       return
     }
-  } else {
+  } else{
     $.log(`远程红包雨配置获取成功`)
   }
   for (let i = 0; i < cookiesArr.length; i++) {
@@ -75,7 +70,7 @@ let ids = {
       $.isLogin = true;
       $.nickName = '';
       message = '';
-      //await TotalBean();
+      await TotalBean();
       console.log(`\n******开始【京东账号${$.index}】${$.nickName || $.UserName}*********\n`);
       if (!$.isLogin) {
         $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/`, {"open-url": "https://bean.m.jd.com/"});
@@ -111,11 +106,11 @@ function showMsg() {
 function getRedRain() {
   return new Promise(resolve => {
     $.get({
-      url: "http://qn6l5d6wm.hn-bkt.clouddn.com/jd_live_redRain.json?" + Date.now(),
+      url: "http://qn6l5d6wm.hn-bkt.clouddn.com/jd_live_redRain_offical.json?" + Date.now(),
     }, (err, resp, data) => {
       try {
         if (err) {
-          console.log(`${JSON.stringify(err)}`)
+          console.log(`1111${JSON.stringify(err)}`)
           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
           if (safeGet(data)) {
@@ -157,7 +152,7 @@ function receiveRedRain() {
               console.log(`今日次数已满`)
               message += `领取失败，本场已领过`;
             } else {
-              message += `${data.msg}`;
+              console.log(`异常：${JSON.stringify(data)}`)
             }
           }
         }
