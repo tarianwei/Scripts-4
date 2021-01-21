@@ -1,0 +1,35 @@
+name: update_ios_task
+
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 4,16 * * *'
+  repository_dispatch:
+    types: update_ios_task
+  #push:
+  #  branches: [ main ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: github.event.repository.owner.id == github.event.sender.id
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          repository: ${{ github.repository }}
+
+      - name: "Update_iOS_Tasks"
+        run: |
+          bash update_task.sh
+      - name: commit
+        run: |
+          git config --global user.email ${{ secrets.EMAIL }}
+          git config --global user.name TongLin138
+          git add .
+          git commit -m "update_ios_task by Github Action" -a || echo "Nothing to update"
+      - name: Push changes
+        uses: ad-m/github-push-action@main
+        with:
+          github_token: ${{ secrets.TOKEN }}
+          branch: main

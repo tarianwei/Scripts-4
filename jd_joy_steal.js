@@ -1,9 +1,31 @@
 /*
- * @Author: lxk0301 https://github.com/lxk0301
- * @Date: 2021-01-12 16:00:00 
- * @Last Modified by: TongLin138
- * @Last Modified time: 2021-01-19 20:00:00
+ * @Author: LXK9301 https://github.com/LXK9301
+ * @Date: 2020-07-16 18:54:16
+ * @Last Modified by:   TongLin138
+ * @Last Modified time: 2021-01-21 22:00:00
  */
+/*
+最近经常出现给偷好友积分与狗粮失败的情况，故建议cron设置为多次
+jd宠汪汪偷好友积分与狗粮,及给好友喂食
+偷好友积分上限是20个好友(即获得100积分)，帮好友喂食上限是20个好友(即获得200积分)，偷好友狗粮上限也是20个好友(最多获得120g狗粮)
+IOS用户支持京东双账号,NodeJs用户支持N个京东账号
+脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
+如果开启了给好友喂食功能，建议先凌晨0点运行jd_joy.js脚本获取狗粮后，再运行此脚本(jd_joy_steal.js)可偷好友积分，6点运行可偷好友狗粮
+==========Quantumult X==========
+[task_local]
+#宠汪汪偷好友积分与狗粮
+0 0-10/2 * * * https://raw.githubusercontent.com/TongLin138/Scripts/main/jd_joy_steal.js, tag=宠汪汪偷好友积分与狗粮, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdcww.png, enabled=true
+
+=======Loon========
+[Script]
+cron "0 0-10/2 * * *" script-path=https://raw.githubusercontent.com/TongLin138/Scripts/main/jd_joy_steal.js,tag=宠汪汪偷好友积分与狗粮
+
+========Surge==========
+宠汪汪偷好友积分与狗粮 = type=cron,cronexp="0 0-10/2 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/TongLin138/Scripts/main/jd_joy_steal.js
+
+=======小火箭=====
+宠汪汪偷好友积分与狗粮 = type=cron,script-path=https://raw.githubusercontent.com/TongLin138/Scripts/main/jd_joy_steal.js, cronexpr="0 0-10/2 * * *", timeout=3600, enable=true
+*/
 
 const $ = new Env('宠汪汪偷好友积分与狗粮');
 const notify = $.isNode() ? require('./sendNotify') : '';
@@ -92,6 +114,8 @@ async function jdJoySteal() {
     $.helpFood = 0;
     $.stealFriendCoin = 0;
     $.stealFood = 0;
+    $.stealStatus = null;
+    $.helpFeedStatus = null;
     message += `【京东账号${$.index}】${$.nickName}\n`;
     await getFriends();//查询是否有好友
     await getCoinChanges();//查询喂食好友和偷好友积分是否已达上限

@@ -1,9 +1,11 @@
 /*
- * @Author: lxk0301 https://github.com/lxk0301
- * @Date: 2021-01-12 16:00:00 
- * @Last Modified by: TongLin138
- * @Last Modified time: 2021-01-15 21:00:00
+crazy joy
+挂机领金币/宝箱专用
+⚠️建议云端使用。手机端不建议使用(会一直跑下去，永不停止)
+10 7 * * * https://raw.githubusercontent.com/TongLin138/Scripts/main/jd_crazy_joy_coin.js
+
  */
+
 
 const $ = new Env('crazyJoy挂机');
 const JD_API_HOST = 'https://api.m.jd.com/';

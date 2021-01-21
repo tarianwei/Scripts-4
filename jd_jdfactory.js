@@ -1,10 +1,33 @@
 /*
- * @Author: lxk0301 https://github.com/lxk0301
- * @Date: 2021-01-12 16:00:00 
- * @Last Modified by: TongLin138
- * @Last Modified time: 2021-01-17 22:00:00
+ * @Author: LXK9301 https://github.com/LXK9301
+ * @Date: 2020-12-06 18:19:21
+ * @Last Modified by:   TongLin138
+ * @Last Modified time: 2021-01-21 22:00:00
  */
+/*
+东东工厂，不是京喜工厂
+免费产生的电量(10秒1个电量，500个电量满，5000秒到上限不生产，算起来是84分钟达到上限)
+故建议1小时运行一次
+开会员任务和去京东首页点击“数码电器任务目前未做
+不会每次运行脚本都投入电力
+只有当心仪的商品存在，并且收集起来的电量满足当前商品所需电力，才投入
+已支持IOS双京东账号,Node.js支持N个京东账号
+脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
+============Quantumultx===============
+[task_local]
+#东东工厂
+10 * * * * https://raw.githubusercontent.com/TongLin138/Scripts/main/jd_jdfactory.js, tag=东东工厂, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jd_factory.png, enabled=true
 
+================Loon==============
+[Script]
+cron "10 * * * *" script-path=https://raw.githubusercontent.com/TongLin138/Scripts/main/jd_jdfactory.js,tag=东东工厂
+
+===============Surge=================
+东东工厂 = type=cron,cronexp="10 * * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/TongLin138/Scripts/main/jd_jdfactory.js
+
+============小火箭=========
+东东工厂 = type=cron,script-path=https://raw.githubusercontent.com/TongLin138/Scripts/main/jd_jdfactory.js, cronexpr="10 * * * *", timeout=3600, enable=true
+ */
 const $ = new Env('东东工厂');
 
 const notify = $.isNode() ? require('./sendNotify') : '';
@@ -694,7 +717,7 @@ function TotalBean() {
         "Connection": "keep-alive",
         "Cookie": cookie,
         "Referer": "https://wqs.jd.com/my/jingdou/my.shtml?sceneval=2",
-        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0")
+        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.3.5;14.3;bf1f9a94239880f59a8f3b018a3aadf380e216fc;network/wifi;ADID/C1F5A079-892C-4995-8CFD-9CC43BDE88E7;supportApplePay/0;hasUPPay/0;hasOCPay/0;model/iPhone10,3;addressid/827662943;supportBestPay/0;appBuild/167515;jdSupportDarkMode/0;pv/632.3;apprpd/Babel_Native;ref/TTTChannelViewContoller;psq/2;ads/;psn/bf1f9a94239880f59a8f3b018a3aadf380e216fc|739;jdv/0|iosapp|t_335139774|appshare|Wxfriends|1610699748309|1610699752;adk/;app_device/IOS;pap/JA2015_311210|9.3.5|IOS 14.3;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1")
       },
       "timeout": 10000,
     }

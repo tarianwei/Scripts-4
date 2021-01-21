@@ -1,9 +1,29 @@
 /*
- * @Author: lxk0301 https://github.com/lxk0301
- * @Date: 2021-01-12 16:00:00 
- * @Last Modified by: TongLin138
- * @Last Modified time: 2021-01-19 22:00:00
+京东京喜工厂
+更新时间：2021-1-21
+活动入口 :京东APP->游戏与互动->查看更多->京喜工厂
+或者: 京东APP首页搜索 "玩一玩" ,造物工厂即可
+
+
+已支持IOS双京东账号,Node.js支持N个京东账号
+脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
+============Quantumultx===============
+[task_local]
+#京喜工厂
+10 * * * * https://raw.githubusercontent.com/TongLin138/Scripts/main/jd_dreamFactory.js, tag=京喜工厂, img-url=https://github.com/58xinian/icon/raw/master/jdgc.png, enabled=true
+
+================Loon==============
+[Script]
+cron "10 * * * *" script-path=https://raw.githubusercontent.com/TongLin138/Scripts/main/jd_dreamFactory.js,tag=京喜工厂
+
+===============Surge=================
+京喜工厂 = type=cron,cronexp="10 * * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/TongLin138/Scripts/main/jd_dreamFactory.js
+
+============小火箭=========
+京喜工厂 = type=cron,script-path=https://raw.githubusercontent.com/TongLin138/Scripts/main/jd_dreamFactory.js, cronexpr="10 * * * *", timeout=3600, enable=true
+
  */
+
 
 const $ = new Env('京喜工厂');
 const JD_API_HOST = 'https://m.jingxi.com';

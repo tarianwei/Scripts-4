@@ -1,16 +1,35 @@
 /*
- * @Author: lxk0301 https://github.com/lxk0301
- * @Date: 2021-01-12 16:00:00 
- * @Last Modified by: TongLin138
- * @Last Modified time: 2021-01-13 21:00:00
+crazyJoy任务
+
+每天运行一次即可
+
+
+已支持IOS双京东账号,Node.js支持N个京东账号
+脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
+============Quantumultx===============
+[task_local]
+#crazyJoy任务
+10 7 * * * https://raw.githubusercontent.com/TongLin138/Scripts/main/jd_crazy_joy.js, tag=crazyJoy任务, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jd_crazy_joy.png, enabled=true
+
+================Loon==============
+[Script]
+cron "10 7 * * *" script-path=https://raw.githubusercontent.com/TongLin138/Scripts/main/jd_crazy_joy.js,tag=crazyJoy任务
+
+===============Surge=================
+crazyJoy任务 = type=cron,cronexp="10 7 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/TongLin138/Scripts/main/jd_crazy_joy.js
+
+============小火箭=========
+crazyJoy任务 = type=cron,script-path=https://raw.githubusercontent.com/TongLin138/Scripts/main/jd_crazy_joy.js, cronexpr="10 7 * * *", timeout=3600, enable=true
+
  */
+
 
 const $ = new Env('crazyJoy任务');
 const JD_API_HOST = 'https://api.m.jd.com/';
 
 const notify = $.isNode() ? require('./sendNotify') : '';
-let jdNotify = true; //是否关闭通知，false打开通知推送，true关闭通知推送
-let helpSelf = true; // 循环助力，默认关闭
+let jdNotify = true;//是否关闭通知，false打开通知推送，true关闭通知推送
+let helpSelf = false // 循环助力，默认关闭
 let applyJdBean = 2000; //疯狂的JOY京豆兑换，目前最小值为2000京豆，默认为 0 不开启京豆兑换
 let cookiesArr = [], cookie = '', message = '';
 const inviteCodes = [
