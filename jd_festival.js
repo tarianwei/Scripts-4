@@ -2,7 +2,7 @@
  * @Author: shylocks https://github.com/shylocks
  * @Date: 2021-01-26 10:00:00
  * @Last Modified by:   TongLin138
- * @Last Modified time: 2021-01-26 10:00:00
+ * @Last Modified time: 2021-01-26 12:00:00
  */
 
 const $ = new Env('京东手机年终奖');
@@ -12,10 +12,19 @@ const notify = $.isNode() ? require('./sendNotify') : '';
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '', message;
-const randomCount = $.isNode() ? 20 : 0;
+const randomCount = 0;
 
 const inviteCodes = [
-  `9b98eb2d3a70b4088`
+  `81232620-8281-4e63-bea6-b9aa0336281d@e02a20e6-54ef-4555-a96b-8f937859f920@b3048693-31a2-464f-87e2-9c6cff7deff0@1836ea56-b6c5-4638-be22-2eab1392001c@766d2851-67ab-443b-8700-b3b4b90a210c`,
+  `81232620-8281-4e63-bea6-b9aa0336281d@e02a20e6-54ef-4555-a96b-8f937859f920@b3048693-31a2-464f-87e2-9c6cff7deff0@1836ea56-b6c5-4638-be22-2eab1392001c@766d2851-67ab-443b-8700-b3b4b90a210c`,
+  `81232620-8281-4e63-bea6-b9aa0336281d@e02a20e6-54ef-4555-a96b-8f937859f920@b3048693-31a2-464f-87e2-9c6cff7deff0@1836ea56-b6c5-4638-be22-2eab1392001c@766d2851-67ab-443b-8700-b3b4b90a210c`,
+  `81232620-8281-4e63-bea6-b9aa0336281d@e02a20e6-54ef-4555-a96b-8f937859f920@b3048693-31a2-464f-87e2-9c6cff7deff0@1836ea56-b6c5-4638-be22-2eab1392001c@766d2851-67ab-443b-8700-b3b4b90a210c`,
+  `81232620-8281-4e63-bea6-b9aa0336281d@e02a20e6-54ef-4555-a96b-8f937859f920@b3048693-31a2-464f-87e2-9c6cff7deff0@1836ea56-b6c5-4638-be22-2eab1392001c@766d2851-67ab-443b-8700-b3b4b90a210c`,
+  `55a3b414-4d63-406a-bec9-fdc9948e3270@de3ced76-b75d-428c-a975-21ee6adb1888@007c76ca-5c74-42ed-ae90-71c9865b41b7@47f4620f-9db9-45a6-91dd-141da17eb266@4698858f-cad5-4ec0-945f-2c857ed5b672`,
+  `55a3b414-4d63-406a-bec9-fdc9948e3270@de3ced76-b75d-428c-a975-21ee6adb1888@007c76ca-5c74-42ed-ae90-71c9865b41b7@47f4620f-9db9-45a6-91dd-141da17eb266@4698858f-cad5-4ec0-945f-2c857ed5b672`,
+  `55a3b414-4d63-406a-bec9-fdc9948e3270@de3ced76-b75d-428c-a975-21ee6adb1888@007c76ca-5c74-42ed-ae90-71c9865b41b7@47f4620f-9db9-45a6-91dd-141da17eb266@4698858f-cad5-4ec0-945f-2c857ed5b672`,
+  `55a3b414-4d63-406a-bec9-fdc9948e3270@de3ced76-b75d-428c-a975-21ee6adb1888@007c76ca-5c74-42ed-ae90-71c9865b41b7@47f4620f-9db9-45a6-91dd-141da17eb266@4698858f-cad5-4ec0-945f-2c857ed5b672`,
+  `55a3b414-4d63-406a-bec9-fdc9948e3270@de3ced76-b75d-428c-a975-21ee6adb1888@007c76ca-5c74-42ed-ae90-71c9865b41b7@47f4620f-9db9-45a6-91dd-141da17eb266@4698858f-cad5-4ec0-945f-2c857ed5b672`
 ];
 
 if ($.isNode()) {
@@ -495,7 +504,7 @@ function taskPostUrl(function_id, body = {}) {
       'pragma': 'no-cache',
       'sign': sign(n, `d55b480bed0545839dbd8b78b6cffdb1${t}`, `/sf/${function_id}`),
       'timestamp': t,
-      "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0")
+      "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.3.7;14.3;bf1f9a94239880f59a8f3b018a3aadf380e216fc;network/wifi;supportApplePay/0;hasUPPay/0;hasOCPay/0;model/iPhone10,3;addressid/1065702877;supportBestPay/0;appBuild/167536;jdSupportDarkMode/0;pv/854.2;apprpd/Home_Main;ref/JDMainPageViewController;psq/1;ads/;psn/bf1f9a94239880f59a8f3b018a3aadf380e216fc|983;jdv/0|iosapp|t_335139774|appshare|Wxfriends|1611534830673|1611534883;adk/;app_device/IOS;pap/JA2015_311210|9.3.7|IOS 14.3;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1")
     }
   }
 }
@@ -528,7 +537,7 @@ function taskUrl(function_id, body = {}) {
       'pragma': 'no-cache',
       'sign': sign(n, `d55b480bed0545839dbd8b78b6cffdb1${t}`, `/sf/${function_id}`),
       'timestamp': t,
-      "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0")
+      "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.3.7;14.3;bf1f9a94239880f59a8f3b018a3aadf380e216fc;network/wifi;supportApplePay/0;hasUPPay/0;hasOCPay/0;model/iPhone10,3;addressid/1065702877;supportBestPay/0;appBuild/167536;jdSupportDarkMode/0;pv/854.2;apprpd/Home_Main;ref/JDMainPageViewController;psq/1;ads/;psn/bf1f9a94239880f59a8f3b018a3aadf380e216fc|983;jdv/0|iosapp|t_335139774|appshare|Wxfriends|1611534830673|1611534883;adk/;app_device/IOS;pap/JA2015_311210|9.3.7|IOS 14.3;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1")
     }
   }
 }
@@ -545,7 +554,7 @@ function TotalBean() {
         "Connection": "keep-alive",
         "Cookie": cookie,
         "Referer": "https://wqs.jd.com/my/jingdou/my.shtml?sceneval=2",
-        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0") : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0")
+        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : "jdapp;iPhone;9.3.7;14.3;bf1f9a94239880f59a8f3b018a3aadf380e216fc;network/wifi;supportApplePay/0;hasUPPay/0;hasOCPay/0;model/iPhone10,3;addressid/1065702877;supportBestPay/0;appBuild/167536;jdSupportDarkMode/0;pv/854.2;apprpd/Home_Main;ref/JDMainPageViewController;psq/1;ads/;psn/bf1f9a94239880f59a8f3b018a3aadf380e216fc|983;jdv/0|iosapp|t_335139774|appshare|Wxfriends|1611534830673|1611534883;adk/;app_device/IOS;pap/JA2015_311210|9.3.7|IOS 14.3;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1") : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.3.7;14.3;bf1f9a94239880f59a8f3b018a3aadf380e216fc;network/wifi;supportApplePay/0;hasUPPay/0;hasOCPay/0;model/iPhone10,3;addressid/1065702877;supportBestPay/0;appBuild/167536;jdSupportDarkMode/0;pv/854.2;apprpd/Home_Main;ref/JDMainPageViewController;psq/1;ads/;psn/bf1f9a94239880f59a8f3b018a3aadf380e216fc|983;jdv/0|iosapp|t_335139774|appshare|Wxfriends|1611534830673|1611534883;adk/;app_device/IOS;pap/JA2015_311210|9.3.7|IOS 14.3;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1")
       }
     }
     $.post(options, (err, resp, data) => {
