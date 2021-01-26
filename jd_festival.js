@@ -2,7 +2,7 @@
  * @Author: shylocks https://github.com/shylocks
  * @Date: 2021-01-26 10:00:00
  * @Last Modified by:   TongLin138
- * @Last Modified time: 2021-01-26 12:00:00
+ * @Last Modified time: 2021-01-26 20:00:00
  */
 
 const $ = new Env('京东手机年终奖');
@@ -97,6 +97,7 @@ async function helpFriends() {
     if (!code) continue
     console.log(`去助力好友${code}`)
     const helpRes = await doSupport(code);
+    await $.wait(1000)
   }
 }
 
@@ -503,8 +504,9 @@ function taskPostUrl(function_id, body = {}) {
       'dnt': '1',
       'pragma': 'no-cache',
       'sign': sign(n, `d55b480bed0545839dbd8b78b6cffdb1${t}`, `/sf/${function_id}`),
-      'timestamp': t,
-      "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.3.7;14.3;bf1f9a94239880f59a8f3b018a3aadf380e216fc;network/wifi;supportApplePay/0;hasUPPay/0;hasOCPay/0;model/iPhone10,3;addressid/1065702877;supportBestPay/0;appBuild/167536;jdSupportDarkMode/0;pv/854.2;apprpd/Home_Main;ref/JDMainPageViewController;psq/1;ads/;psn/bf1f9a94239880f59a8f3b018a3aadf380e216fc|983;jdv/0|iosapp|t_335139774|appshare|Wxfriends|1611534830673|1611534883;adk/;app_device/IOS;pap/JA2015_311210|9.3.7|IOS 14.3;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1")
+      'timestamp': ($.isQuanX()||$.isSurge()) ?t.toString():t,
+      "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/87.0.4280.141"
+    )
     }
   }
 }
@@ -536,8 +538,8 @@ function taskUrl(function_id, body = {}) {
       'dnt': '1',
       'pragma': 'no-cache',
       'sign': sign(n, `d55b480bed0545839dbd8b78b6cffdb1${t}`, `/sf/${function_id}`),
-      'timestamp': t,
-      "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.3.7;14.3;bf1f9a94239880f59a8f3b018a3aadf380e216fc;network/wifi;supportApplePay/0;hasUPPay/0;hasOCPay/0;model/iPhone10,3;addressid/1065702877;supportBestPay/0;appBuild/167536;jdSupportDarkMode/0;pv/854.2;apprpd/Home_Main;ref/JDMainPageViewController;psq/1;ads/;psn/bf1f9a94239880f59a8f3b018a3aadf380e216fc|983;jdv/0|iosapp|t_335139774|appshare|Wxfriends|1611534830673|1611534883;adk/;app_device/IOS;pap/JA2015_311210|9.3.7|IOS 14.3;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1")
+      'timestamp': ($.isQuanX()||$.isSurge()) ?t.toString():t,
+      "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/87.0.4280.141"
     }
   }
 }
@@ -554,7 +556,7 @@ function TotalBean() {
         "Connection": "keep-alive",
         "Cookie": cookie,
         "Referer": "https://wqs.jd.com/my/jingdou/my.shtml?sceneval=2",
-        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : "jdapp;iPhone;9.3.7;14.3;bf1f9a94239880f59a8f3b018a3aadf380e216fc;network/wifi;supportApplePay/0;hasUPPay/0;hasOCPay/0;model/iPhone10,3;addressid/1065702877;supportBestPay/0;appBuild/167536;jdSupportDarkMode/0;pv/854.2;apprpd/Home_Main;ref/JDMainPageViewController;psq/1;ads/;psn/bf1f9a94239880f59a8f3b018a3aadf380e216fc|983;jdv/0|iosapp|t_335139774|appshare|Wxfriends|1611534830673|1611534883;adk/;app_device/IOS;pap/JA2015_311210|9.3.7|IOS 14.3;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1") : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.3.7;14.3;bf1f9a94239880f59a8f3b018a3aadf380e216fc;network/wifi;supportApplePay/0;hasUPPay/0;hasOCPay/0;model/iPhone10,3;addressid/1065702877;supportBestPay/0;appBuild/167536;jdSupportDarkMode/0;pv/854.2;apprpd/Home_Main;ref/JDMainPageViewController;psq/1;ads/;psn/bf1f9a94239880f59a8f3b018a3aadf380e216fc|983;jdv/0|iosapp|t_335139774|appshare|Wxfriends|1611534830673|1611534883;adk/;app_device/IOS;pap/JA2015_311210|9.3.7|IOS 14.3;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1")
+        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0") : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0")
       }
     }
     $.post(options, (err, resp, data) => {
@@ -663,7 +665,7 @@ function shareCodesFormat() {
       const tempIndex = $.index > inviteCodes.length ? (inviteCodes.length - 1) : ($.index - 1);
       $.newShareCodes = inviteCodes[tempIndex].split('@');
     }
-    const readShareCodeRes = await readShareCode();
+    const readShareCodeRes = null // await readShareCode();
     if (readShareCodeRes && readShareCodeRes.code === 200) {
       $.newShareCodes = [...new Set([...$.newShareCodes, ...(readShareCodeRes.data || [])])];
     }
