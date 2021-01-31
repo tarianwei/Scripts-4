@@ -1,25 +1,28 @@
-#必须要的默认定时任务请勿删除
-52 */1 * * * docker_entrypoint.sh >> /scripts/logs/default_task.log 2>&1
 # 每3天的23:50分清理一次日志
 50 23 */3 * * rm -rf /scripts/logs/*.log
 
 ##############短期活动##############
-#年货节(活动时间：2021年1月9日-2021年2月9日)
+# 年货节(活动时间：2021年1月9日-2021年2月9日)
 10 8 * * * node /scripts/jd_nh.js >> /scripts/logs/jd_nh.log 2>&1
-#京东炸年兽集爆竹(活动时间:2021-1-18至2021-2-11)怕有遗漏故多运行几次
+# 京东炸年兽集爆竹(活动时间:2021-1-18至2021-2-11)怕有遗漏故多运行几次
 0 * * * * node /scripts/jd_nian.js >> /scripts/logs/jd_nian.log 2>&1
-#专门收集每秒产生的爆竹(1小时运行一次)
+# 专门收集每秒产生的爆竹(1小时运行一次)
 30 * * * * node /scripts/jd_nianCollect.js >> /scripts/logs/jd_nianCollect.log 2>&1
-#京东炸年兽签到任务🧨
+# 京东炸年兽签到任务🧨
 50 0,1 * * * node /scripts/jd_nian_sign.js >> /scripts/logs/jd_nian_sign.log 2>&1
-#京东炸年兽AR
+# 京东炸年兽AR
 50 0,1,8 * * * node /scripts/jd_nian_ar.js >> /scripts/logs/jd_nian_ar.log 2>&1
-#京东炸年兽小程序
+# 京东炸年兽小程序
 50 0,1,8 * * * node /scripts/jd_nian_wechat.js >> /scripts/logs/jd_nian_wechat.log 2>&1
-# 集鞭炮赢京豆
-38 8,21 * * * node /scripts/jd_firecrackers.js >> /scripts/logs/jd_firecrackers.log 2>&1
-#京东神仙书院(活动时间:2021-1-20至2021-2-5)
+# 京东神仙书院(活动时间:2021-1-20至2021-2-5)
 30 6 * * * node /scripts/jd_immortal.js >> /scripts/logs/jd_immortal.log 2>&1
+# 京东神仙书院答题(活动时间:2021-1-20至2021-2-5)
+5 1 * * * node /scripts/jd_immortal_answer.js >> /scripts/logs/jd_immortal_answer.log 2>&1
+# 5G狂欢城
+0 */6 * * * node /scripts/jd_5g.js >> /scripts/logs/jd_5g.log 2>&1
+0 */6 * * * node /scripts/jd_818.js >> /scripts/logs/jd_818.log 2>&1
+# 小鸽有礼2
+34 9 * * * node /scripts/jd_xgyl.js >> /scripts/logs/jd_jd_xgyl.log 2>&1
 
 ##############长期活动##############
 # 签到
@@ -106,3 +109,15 @@
 # */20 * * * * node /scripts/jd_family.js >> /scripts/logs/jd_family.log 2>&1
 # 闪购盲盒
 27 8 * * * node /scripts/jd_sgmh.js >> /scripts/logs/jd_sgmh.log 2>&1
+# 源头好物红包
+0 0 * * *  node /scripts/jd_coupon.js >> /scripts/logs/jd_coupon.log 2>&1
+# 京东手机年终奖
+15 0 * * * node /scripts/jd_festival.js >> /scripts/logs/jd_festival.log 2>&1
+# 盲盒抽京豆
+1 7 * * * node /scripts/jd_mh.js >> /scripts/logs/jd_mh.log 2>&1
+# 京东秒秒币
+10 7 * * * node /scripts/jd_ms.js >> /scripts/logs/jd_ms.log 2>&1
+# 小鸽有礼
+5 7 * * * node /scripts/jd_xg.js >> /scripts/logs/jd_xg.log 2>&1
+# 京东超级盒子
+20 7 * * * node /scripts/jd_super_box.js >> /scripts/logs/jd_super_box.log 2>&1
